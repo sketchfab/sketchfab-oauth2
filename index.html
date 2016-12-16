@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketchfab OAuth2 example</title>
+</head>
+
+<body>
+    <button type="button" class="connect">Connect to Sketchfab</button>
+    <pre class="output">
+    </pre>
+
+    <script src="../dist/sketchfab-oauth2.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        var config = {
+            hostname: 'sketchfab.com',
+            client_id: 'ig-3miFgAznsYmxUP9VGoN@Chj7ZIrUfAG!UWwne',
+            redirect_uri: 'http://localhost:8000/authSuccess.html'
+        };
+        var connectButton = document.querySelector('.connect');
+        var output = document.querySelector('.output');
+
+        connectButton.addEventListener('click', function(e){
+
+            var client = new SketchfabOAuth2( config );
+            client.connect().then( function onSuccess( grant ) {
+                console.log( grant );
+            } ).catch( function onError( error ) {
+                console.error( error );
+            } );
+
+        }, false);
+
+    </script>
+</body>
+</html>
