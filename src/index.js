@@ -36,7 +36,8 @@ SketchfabOAuth2.prototype.connect = function () {
             'https://' + this.config.hostname + '/oauth2/authorize/?',
             'state=' + state,
             '&response_type=token',
-            '&client_id=' + this.config.client_id
+            '&client_id=' + this.config.client_id,
+            '&redirect_uri=' + encodeURIComponent(this.config.redirect_uri)
         ].join( '' );
 
         var loginPopup = window.open( authorizeUrl, 'loginWindow', 'width=640,height=400' );
