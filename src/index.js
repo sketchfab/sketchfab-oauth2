@@ -1,5 +1,5 @@
 require('./libs/assignPolyfill');
-var when = require( 'when' );
+var Promise = require('promise-polyfill');
 var queryString = require('./libs/queryString');
 var buildQueryString = queryString.buildQueryString;
 var parseQueryString = queryString.parseQueryString;
@@ -28,7 +28,7 @@ function SketchfabOAuth2( config ) {
 
 SketchfabOAuth2.prototype.connect = function (params) {
 
-    return when.promise( function ( resolve, reject ) {
+    return new Promise( function ( resolve, reject ) {
         if ( !this.config.client_id ) {
             reject( new Error( 'client_id is missing.' ) );
             return;

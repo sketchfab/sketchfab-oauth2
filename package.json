@@ -10,7 +10,7 @@
   "author": "Sketchfab",
   "license": "ISC",
   "dependencies": {
-    "when": "^3.7.7"
+    "promise-polyfill": "7.1.2"
   },
   "devDependencies": {
     "webpack": "^1.14.0"
