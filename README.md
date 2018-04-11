@@ -10,7 +10,7 @@ To use OAuth2, you need to register your app on Sketchfab.
 Insert the script in your HTML page
 
 ```html
-<script src="../dist/sketchfab-oauth2-1.1.0.js" type="text/javascript"></script>
+<script src="../dist/sketchfab-oauth2-1.2.0.js" type="text/javascript"></script>
 ```
 
 Here's how to use the library:
