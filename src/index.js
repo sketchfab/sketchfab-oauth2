@@ -1,4 +1,8 @@
-var when = require( 'when' );
+require('./libs/assignPolyfill');
+var Promise = require('promise-polyfill');
+var queryString = require('./libs/queryString');
+var buildQueryString = queryString.buildQueryString;
+var parseQueryString = queryString.parseQueryString;
 
 function SketchfabOAuth2( config ) {
 
@@ -22,23 +26,22 @@ function SketchfabOAuth2( config ) {
 
 }
 
-SketchfabOAuth2.prototype.connect = function () {
+SketchfabOAuth2.prototype.connect = function (params) {
 
-    return when.promise( function ( resolve, reject ) {
+    return new Promise( function ( resolve, reject ) {
         if ( !this.config.client_id ) {
             reject( new Error( 'client_id is missing.' ) );
             return;
         }
 
-        // @TODO: allow users to pass their own state
-        var state = +( new Date() );
-        var authorizeUrl = [
-            'https://' + this.config.hostname + '/oauth2/authorize/?',
-            'state=' + state,
-            '&response_type=token',
-            '&client_id=' + this.config.client_id,
-            '&redirect_uri=' + encodeURIComponent(this.config.redirect_uri)
-        ].join( '' );
+        var defaultParams = {
+            'response_type': 'token',
+            'state': +new Date(),
+            'client_id': this.config.client_id,
+            'redirect_uri': this.config.redirect_uri
+        };
+        var queryParams = Object.assign({}, defaultParams, params);
+        var authorizeUrl = 'https://' + this.config.hostname + '/oauth2/authorize/?' + buildQueryString(queryParams);
 
         var loginPopup = window.open( authorizeUrl, 'loginWindow', 'width=640,height=400' );
 
@@ -81,20 +84,6 @@ SketchfabOAuth2.prototype.connect = function () {
         }.bind( this ), 1000 );
 
     }.bind( this ) );
-}
-
-/**
- * parseQueryString
- * @param {string} queryString
- * @return {object} parsed key-values
- */
-function parseQueryString( queryString ) {
-    var result = {};
-    queryString.split( "&" ).forEach( function ( part ) {
-        var item = part.split( "=" );
-        result[ item[ 0 ] ] = decodeURIComponent( item[ 1 ] );
-    } );
-    return result;
 }
 
 module.exports = SketchfabOAuth2;
