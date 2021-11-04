@@ -1,5 +1,5 @@
 {
-  "name": "sketchfab-oauth2",
+  "name": "@sketchfab/oauth2",
   "version": "1.2.0",
   "description": "A JavaScript browser library for connecting to a Sketchfab account with OAuth2",
   "main": "src/index.js",
